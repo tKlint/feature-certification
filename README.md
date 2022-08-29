@@ -13,3 +13,8 @@ Start the dev server,
 ```bash
 $ yarn start
 ```
+Commit your change
+
+```bash
+$ npm run commit
+```
