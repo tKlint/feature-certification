@@ -12,10 +12,11 @@ module.exports = {
         { value: '⏪回滚', name: '回滚:    代码回退' }
     ],
     scopes: [
-        { name: 'leetcode' },
+        { name: 'less' },
         { name: 'javascript' },
         { name: 'typescript' },
-        { name: 'Vue' },
+        { name: 'typescriptreact' },
+        { name: 'javascriptreact' },
         { name: 'node' }
     ],
     // it needs to match the value for field type. Eg.: 'fix'

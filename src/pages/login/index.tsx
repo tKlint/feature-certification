@@ -1,7 +1,7 @@
 import IForm from '@/components/IForm';
 import React from 'react';
 import { Input, Button } from 'antd';
-import { useModel } from 'umi';
+import { useModel, history } from 'umi';
 import { login } from '@/service/qkbwe/login';
 import type { LoginAPI } from '@/service/qkbwe/login';
 import type { LoginFormFields } from './typings';
@@ -16,18 +16,21 @@ const Login: React.FC<Record<string, never>> = () => {
     const accountFieldName: LoginFormFields = 'userName';
     const passwordFieldName: LoginFormFields = 'userPassword';
 
+    const updateUserStatus = async (data: API.CurrentUser) => {
+        await setInitialState({
+            ...initialState,
+            currentUser: data
+        });
+        localStorage.setItem('access-token', data.token);
+        localStorage.setItem('userInfo', JSON.stringify(data));
+        history.push('/');
+    };
+
     const submit = async (formData: LoginAPI.LoginData) => {
         const loginResponse = await login(formData);
         const { code, data } = loginResponse;
         if (code === 200) {
-            await setInitialState({
-                ...initialState,
-                currentUser: data
-            });
-            localStorage.setItem('access-token', data.token);
-            localStorage.setItem('userInfo', JSON.stringify(data));
-            // history.push('/');
-            window.location.reload();
+            updateUserStatus(data);
         }
         return Promise.resolve(false);
     };
